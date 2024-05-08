@@ -162,3 +162,5 @@ cython_debug/
 *.bin 
 *.model
 *.chkpt
+utils/__pycache__
+*pyc
