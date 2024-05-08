@@ -65,7 +65,7 @@ class LMMIterator(object):
         """
 
         src, tgt = [], []
-        model_path = "mbart-large-50"
+        model_path = "/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50"
         for lang in opt.lang:
             src_seq, tgt_seq = [], []
             src_dir = 'data/{}_{}.0'.format(mode, lang)

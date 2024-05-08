@@ -95,7 +95,7 @@ def main():
     print('[Info]', opt)
     torch.manual_seed(opt.seed)
 
-    model_path = "mbart-large-50/"
+    model_path = "/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50"
 
     model = MBartForConditionalGeneration.from_pretrained(model_path)
     model = model.to(device).train()

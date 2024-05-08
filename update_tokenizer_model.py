@@ -8,8 +8,8 @@ from transformers import MBartForConditionalGeneration
 import sentencepiece_model_pb2 as sent_model
 from tokenization_mlm import MLMTokenizer
 
-tokenizer = MLMTokenizer.from_pretrained('checkpoints/facebook-mbart-large-50')
-model = MBartForConditionalGeneration.from_pretrained('checkpoints/facebook-mbart-large-50')
+tokenizer = MLMTokenizer.from_pretrained('/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50')
+model = MBartForConditionalGeneration.from_pretrained('/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50')
 model.resize_token_embeddings(len(tokenizer))
 
 std = model.config.init_std
@@ -32,7 +32,7 @@ vocab = list(set(all_vocab) & set(vocab))
 print(len(vocab))
 
 m = sent_model.ModelProto()
-m.ParseFromString(open('checkpoints/facebook-mbart-large-50/sentencepiece.bpe.model', 'rb').read())
+m.ParseFromString(open('/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50/sentencepiece.bpe.model', 'rb').read())
 
 # update model's embedding based on the new vocab
 cur_id = 0
@@ -56,6 +56,6 @@ model.model.shared.weight.data[cur_id: cur_id + 54, :] = model.model.shared.weig
 model.resize_token_embeddings(cur_id + 54)
 print(cur_id + 54)
 
-model.save_pretrained('.checkpoints/mbart-large-50/')
-with open('checkpoints/mbart-large-50/sentencepiece.bpe.model', 'wb') as f:
+model.save_pretrained('checkpoints/mbart-large-50/')
+with open('/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50/sentencepiece.bpe.model', 'wb') as f:
     f.write(m.SerializeToString())
