@@ -1,0 +1,29 @@
+virtuenv: (DRSparserWang) 
+
+To train the parser:
+
+tb@shai:~/Programs/DRS-pretrained-LMM$ python train_pt.py \
+    -stage bpt -max_lr 1e-4 -min_lr 1e-5 -max_len 128 \
+    -lang de_DE en_XX it_IT nl_XX -warmup_steps 3000 \
+    -decap_steps 30000 -batch_size 8 -epoch 1
+
+========================================
+
+To make predictions:
+
+tb@shai:~/Programs/DRS-pretrained-LMM$ python3 tb_inference.py -bs 8 -stage spt -direc 1
+tb@shai:~/Programs/DRS-pretrained-LMM$ python3 tb_model_predict
+
+
+
+========================================
+virtuenv: (SBN-3.9.7)
+
+To evaluate:
+
+this script evaluates the format like this: 
+"person.n.01 EQU hearer time.n.08 EQU now wound.v.01 Patient -2 Time -1"
+
+python3 /home/tb/Programs/pmb-5.1.0/src/sbn/sbn_smatch.py \
+        -s1 /home/tb/Programs/DRS-pretrained-LMM/data/de/gold/dev.0 \
+        -s2 /home/tb/Programs/DRS-pretrained-LMM/data/de/gold/dev.0

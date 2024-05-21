@@ -34,7 +34,7 @@ def main():
     model_path = "/home/tb/Programs/DRS-pretrained-LMM/checkpoints/mbart-large-50"
     model = MBartForConditionalGeneration.from_pretrained(model_path)
     #model_dir = 'checkpoints/lmm_sft.chkpt'
-    model_dir = 'checkpoints/mlm_spt.chkpt'
+    model_dir = 'checkpoints/mlm_sft.chkpt'
     model.load_state_dict(torch.load(model_dir))
     model.to(device).eval()
 
@@ -44,7 +44,7 @@ def main():
     else:
         tokenizer = MLMTokenizer.from_pretrained(model_path, src_lang=opt.lang)
         forced_id = tokenizer.encode('<drs>', add_special_tokens=False)
-        print(forced_id)
+
 
     src_seq = []
     inp_dir = 'data/{}/gold/test.{}'.format(opt.lang[:2], opt.direc)
@@ -67,12 +67,11 @@ def main():
                 num_beams=opt.nb,
                 max_length=opt.length,
                 forced_bos_token_id=forced_id)
-
             for x, y in zip(outs, src_seq[idx:idx + opt.bs]):
                 text = tokenizer.decode(
                     x.tolist(), skip_special_tokens=True,
                     clean_up_tokenization_spaces=False)
-                #print("klklkl", text)
+                print(text)
                 if len(text.strip()) == 0:
                     text = y
                 #print(text)
